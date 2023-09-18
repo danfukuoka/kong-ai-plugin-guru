@@ -1,0 +1,6 @@
+---
+readable_by: '*'
+layout: ai-plugin-guru.html
+private: true
+title: AI Plugin Guru
+---

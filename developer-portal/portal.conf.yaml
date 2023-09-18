@@ -1,0 +1,7 @@
+...
+menu:
+  # Add this.
+  - title: AI Plugin Guru
+    url: ai-plugin-guru
+    needs_auth: true
+...
