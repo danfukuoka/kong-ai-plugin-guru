@@ -12,8 +12,8 @@ kubectl expose deployment kong-plugin-assistant --type=ClusterIP --port=80 --tar
 k port-forward svc/kong-plugin-assistant 8080:80
 ```
 
+To deploy Developer Portal:
 ```
-To deploy Dev Portal:
 cd ~/hackton-summit/kong-portal-templates
 portal deploy default
 ```
