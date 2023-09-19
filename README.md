@@ -17,3 +17,6 @@ To deploy Developer Portal:
 cd ~/hackton-summit/kong-portal-templates
 portal deploy default
 ```
+
+![Screenshot](images/new_plugin_normal_flow.png)
+![Screenshot](images/new_plugin_ai_flow.png)
