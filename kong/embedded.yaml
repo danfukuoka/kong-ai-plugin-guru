@@ -1,3 +1,10 @@
+# UPDATE THIS.
+customEnv:
+  AWS_ACCESS_KEY_ID:
+  AWS_REGION:
+  AWS_SECRET_ACCESS_KEY:
+  AWS_SESSION_TOKEN:
+
 image:
   repository: kong/kong-gateway
   tag: "3.4"
@@ -43,12 +50,6 @@ env:
       secretKeyRef:
         name: "kong-enterprise-superuser-password"
         key: "password"
-
-customEnv:
-  AWS_ACCESS_KEY_ID: # Add this.
-  AWS_REGION: # Add this.
-  AWS_SECRET_ACCESS_KEY: # Add this.
-  AWS_SESSION_TOKEN: # Add this.
 
 proxy:
   enabled: true

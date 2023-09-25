@@ -4,11 +4,11 @@
 ![Screenshot](images/normalway-versus-aipluginguruway.png)
 ![Screenshot](images/flow.png)
 
-1. 
+1. Get a developer key from the Developer API.
 
-2. 
+2. Get the json list of plugins alread installed.
 
-3. 
+3. Get the response from ChatGPT.
 
 
 Install Kong:
