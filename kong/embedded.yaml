@@ -1,0 +1,150 @@
+image:
+  repository: kong/kong-gateway
+  tag: "3.4"
+
+migrations:
+  preUpgrade: true
+  postUpgrade: true
+
+enterprise:
+  enabled: true
+  license_secret: kong-enterprise-license
+  vitals:
+    enabled: true
+  portal:
+    enabled: true
+    session_conf_secret: kong-session-config
+  rbac:
+    enabled: true
+    admin_gui_auth: openid-connect
+    session_conf_secret: kong-session-config   
+    admin_gui_auth_conf_secret: kong-idp-manager-config
+  smtp:
+    enabled: false
+
+env:
+  tracing_instrumentations: "all"
+  tracing_sampling_rate: "1.0"
+
+  database: postgres
+
+  enforce_rbac: "on"
+  log_level: "debug"
+  portal_gui_protocol: "http"
+  portal_cors_origins: "*"
+  portal_auth: "basic-auth"
+  portal_session_conf:
+    valueFrom:
+      secretKeyRef:
+        name: "kong-session-config"
+        key: "portal_session_conf"
+  password:
+    valueFrom:
+      secretKeyRef:
+        name: "kong-enterprise-superuser-password"
+        key: "password"
+
+customEnv:
+  AWS_ACCESS_KEY_ID: ASIASAP33O7YYEGYTRUO
+  AWS_REGION: us-east-2
+  AWS_SECRET_ACCESS_KEY: Q8KlSsLn7c17W4IWlK1BFgX00BWV9h+9vsW8xn+6
+  AWS_SESSION_TOKEN: FwoGZXIvYXdzEHsaDNglmZjcF1MYBEQ20iKwAd/mjruuA3SxYuD9txcMkwS3zG1UXawJht1w/jawq53+yxEQefaoQpui5y7y2EhBuQAU8XXy7li6x7OfdWsSdO1qn/GwH7IRAoJ3zapeyPsPlvaiw1wK0GSsucMRO3jSwnp/EJaT8q/YVxBjuC2BiUfmjrYJAr2am0KiVj9QqB4NWF9XHZjJjkWoPJVrHadJ/sxNwhASB0qvvldFU8rtyFmR+69K7rsC7HpAQ8ztntrKKL+Qx6gGMi3LlUoqMM2EQ5/MTCoYm9tI4kt5QDwW9+5gkKjs/t3A2wi2LyayeTWEKheTues=
+
+proxy:
+  enabled: true
+  type: ClusterIP
+
+  http:
+    enabled: true
+    servicePort: 80
+    containerPort: 8000
+    parameters: []
+
+  tls:
+    enabled: true
+    servicePort: 443
+    containerPort: 8443
+    parameters:
+    - http2
+
+admin:
+  enabled: true
+  type: ClusterIP
+
+  http:
+    enabled: true
+    servicePort: 8001
+    containerPort: 8001
+
+  tls:
+    enabled: false
+
+  ingress:
+    enabled: false
+
+manager:
+  enabled: true
+  type: ClusterIP
+
+  http:
+    enabled: true
+
+  tls:
+    enabled: false
+
+  ingress:
+    enabled: false
+
+portal:
+  enabled: true
+  type: ClusterIP
+
+  http:
+    enabled: true
+
+  tls:
+    enabled: false
+
+  ingress:
+    enabled: false
+
+  externalIPs: []
+
+portalapi:
+  enabled: true
+  type: ClusterIP
+
+  http:
+    enabled: true
+    servicePort: 8004
+    containerPort: 8004
+    parameters: []
+
+  tls:
+    enabled: false
+    servicePort: 8447
+    containerPort: 8447
+    parameters:
+    - http2
+
+  ingress:
+    enabled: false
+
+  externalIPs: []
+
+postgresql:
+  enabled: true
+  postgresqlDatabase: kong
+  postgresqlPassword: kong
+  postgresqlUsername: kong
+  service:
+    port: 5432
+
+ingressController:
+  enabled: false
+
+serviceMonitor:
+  enabled: true
+  interval: 10s
+  labels:
+    release: prometheus
