@@ -8,46 +8,90 @@
     <label for="pluginInput">What do you need the plugin to do?</label>
     <textarea id="pluginInput" rows="4" cols="124"></textarea>
 
-    <!-- Button to Submit -->
-    <button id="submitButton">Submit</button>
+    <!-- Button to Submit (Wrapped in a div for alignment) -->
+    <div style="display: flex; justify-content: flex-end;">
+        <button
+          id="submitButton"
+          class="btn btn-primary"
+          type="submit">Submit</button>
+    </div>
 
     <!-- Text Area for Response -->
     <label for="response">Declarative Kong:</label>
-    <textarea id="response" rows="30" cols="124" readonly></textarea>
+    <textarea id="response" rows="40" cols="124" readonly></textarea>
 
-    <!-- JavaScript (Optional) -->
+
     <script>
-        // JavaScript code can be added here for interactivity.
-        // For example, you can use JavaScript to handle button clicks and display responses.
-        document.getElementById("submitButton").addEventListener("click", function() {
-            // Get the input from the text area
-            var userInput = document.getElementById("pluginInput").value;
 
-            // Display "Processing" in the response textarea
+        document.getElementById("pluginInput").value = "I need to add tracing to my api"
+        
+        kongProxy = "http://127.0.0.1:8000"
+        kongPortalApi = "http://127.0.0.1:8004"
+    
+        document.getElementById("submitButton").addEventListener("click", async function() {
+
+            const userInput = document.getElementById("pluginInput").value;
             document.getElementById("response").value = "Processing...";
 
-            // Create a new XMLHttpRequest object
-            var xhr = new XMLHttpRequest();
+            // 1) Get the Api Key.
+            var url = kongPortalApi+"/default/credentials/key-auth?size=1";
 
-            // Configure the request
-            xhr.open("POST", "http://localhost:8080", true);
-            xhr.setRequestHeader("Content-Type", "text/plain"); // Set the content type to plain text
+            var response = await fetch(url, {
+                method: "get",
+                credentials: 'include'
+            });
+            response = await response.json();
+            const apiKey = response.data[0].key;
+            console.log(apiKey)
 
-            // Define a callback function to handle the response
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        // Handle the successful response here
-                        document.getElementById("response").value = xhr.responseText;
-                    } else {
-                        // Handle errors here
-                        document.getElementById("response").value = "Error: " + xhr.status;
-                    }
+            // 2) Get plugins from Kong Api behind Kong Proxy.
+            var url = kongProxy+"/plugins";
+
+            response = await fetch(url, {
+                method: "get",
+                headers: {
+                    "Content-Type": "application/json",
+                    "apikey": apiKey
                 }
-            };
+            });
+            const pluginsJson = await response.text();
 
-            // Send the request with the user input as the request body
-            xhr.send(userInput);
+            // 3) Get OpenApi response.
+            url = kongProxy+"/chatgpt/v1/chat/completions";
+            
+            const prompt = `
+                                Hello. Can you provide a Kong plugin in declarative Kong format (Deck)?
+                                I will tell you what kind of plugin I need.
+                                You will search for this plugin in this json list: '${pluginsJson}'.
+                                If you find the plugin that I want in this list, transform it into Deck,
+                                remove information about routes and services, and give it to me,
+                                and do not give a general example.
+                                If you do not find it, please inform me that there is no plugin of this kind already configured,
+                                and then search in your database for how to use the plugin that is most likely to solve my problem.
+                            `;
+
+            const requestData = {
+                model: "gpt-3.5-turbo",
+                messages: [{ role: "user", content: prompt + userInput }],
+                temperature: 0,
+            };
+            console.log( prompt + userInput)
+
+            // Make the first API call
+            response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "apikey": apiKey
+                },
+                body: JSON.stringify(requestData),
+            });
+            var responseOpenAi = await response.json();
+            responseOpenAi = responseOpenAi.choices[0].message.content;
+
+            // Process and display the responses as needed
+            document.getElementById("response").value = responseOpenAi;
+
         });
     </script>
 </div>
@@ -56,11 +100,9 @@
     h3 {
         margin: 25px 0 25px 0;
     }
-    #submitButton {
-        float: right;
-    }
+
     textarea {
-        margin: 25px 0 25px 0;
+        margin: 12px 0 12px 0;
         height: auto;
     }
 </style>

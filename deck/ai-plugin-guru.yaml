@@ -1,0 +1,69 @@
+_format_version: "3.0"
+_workspace: default
+_info:
+  select_tags:
+  - ai-plugin-guru
+services:
+- name: Plugins
+  port: 8001
+  protocol: http
+  host: kong-kong-admin.kong
+  routes:
+  - name: Plugins
+    protocols:
+    - http
+    paths:
+    - /plugins
+    strip_path: false
+    plugins:
+    - name: cors
+      instance_name: cors-kong-admin
+      config:
+        origins:
+        - http://127.0.0.1:8003
+    - name: key-auth
+      instance_name: key-kong-admin
+      config:
+        key_names:
+        - apikey
+        key_in_header: true
+        key_in_query: false
+    - name: request-transformer-advanced
+      instance_name: rt-kong-admin
+      config:
+        add:
+          headers:
+          - "{vault://aws/ai-plugin-guru/kong-admin}"
+- name: Chatgpt
+  port: 443
+  protocol: https
+  host: api.openai.com
+  routes:
+  - name: Chatgpt
+    protocols:
+    - http
+    paths:
+    - /chatgpt
+    strip_path: true
+    plugins:
+    - name: cors
+      instance_name: cors-chatgpt
+      config:
+        origins:
+        - http://127.0.0.1:8003
+    - name: key-auth
+      instance_name: key-chatgpt
+      config:
+        key_names:
+        - apikey
+        key_in_header: true
+        key_in_query: false
+    - name: request-transformer-advanced
+      instance_name: rt-chatgpt
+      config:
+        add:
+          headers:
+          - "{vault://aws/ai-plugin-guru/chatgpt}"
+
+  
+  # deck sync --workspace default --select-tag ai-plugin-guru --state ./deck/ai-plugin-guru.yaml
