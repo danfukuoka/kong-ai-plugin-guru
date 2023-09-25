@@ -45,10 +45,10 @@ env:
         key: "password"
 
 customEnv:
-  AWS_ACCESS_KEY_ID: ASIASAP33O7YYEGYTRUO
-  AWS_REGION: us-east-2
-  AWS_SECRET_ACCESS_KEY: Q8KlSsLn7c17W4IWlK1BFgX00BWV9h+9vsW8xn+6
-  AWS_SESSION_TOKEN: FwoGZXIvYXdzEHsaDNglmZjcF1MYBEQ20iKwAd/mjruuA3SxYuD9txcMkwS3zG1UXawJht1w/jawq53+yxEQefaoQpui5y7y2EhBuQAU8XXy7li6x7OfdWsSdO1qn/GwH7IRAoJ3zapeyPsPlvaiw1wK0GSsucMRO3jSwnp/EJaT8q/YVxBjuC2BiUfmjrYJAr2am0KiVj9QqB4NWF9XHZjJjkWoPJVrHadJ/sxNwhASB0qvvldFU8rtyFmR+69K7rsC7HpAQ8ztntrKKL+Qx6gGMi3LlUoqMM2EQ5/MTCoYm9tI4kt5QDwW9+5gkKjs/t3A2wi2LyayeTWEKheTues=
+  AWS_ACCESS_KEY_ID: # Add this.
+  AWS_REGION: # Add this.
+  AWS_SECRET_ACCESS_KEY: # Add this.
+  AWS_SESSION_TOKEN: # Add this.
 
 proxy:
   enabled: true

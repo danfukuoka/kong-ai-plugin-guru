@@ -4,6 +4,12 @@
 ![Screenshot](images/normalway-versus-aipluginguruway.png)
 ![Screenshot](images/flow.png)
 
+1. 
+
+2. 
+
+3. 
+
 
 Install Kong:
 ```
