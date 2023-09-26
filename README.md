@@ -15,18 +15,20 @@ This repository contains an Addon to the Kong Developer Portal that leverages Ch
 ### The Normal Way:
 A new developer has to go through at least these four steps:
 
-1) Choose a plugin. The developer has a problem and needs to search for a plugin that solves this problem. Sometimes, it's not clear which plugin to use because they have different names. For example, OpenID Connect (for authentication and authorization) and OpenTelemetry (for tracing).
+1) **Choose a plugin:** The developer has a problem and needs to search for a plugin that solves this problem. Sometimes, it's not clear which plugin to use because they have different names. For example, OpenID Connect (for authentication and authorization) and OpenTelemetry (for tracing).
 
-2) Understand the basic structure. Each plugin has its own basic structure described in its documentation.
+2) **Understand the basic structure:** Each plugin has its own basic structure described in its documentation.
 
-3) Company-Specific Configurations. Most plugins require company-specific configurations, such as endpoints, client IDs, client secrets, and other settings. The new developer has to review the code of the already installed plugins or seek assistance from others to understand these specifications.
+3) **Company-Specific Configurations:** Most plugins require company-specific configurations, such as endpoints, client IDs, client secrets, and other settings. The new developer has to review the code of the already installed plugins or seek assistance from others to understand these specifications.
 
-4) The new developer has to modify the basic use of the plugins to include specific configurations for their own API."
+4) **My API-Specific Configurations:** The new developer has to modify the basic use of the plugins to include specific configurations for their own API."
+
+### The AI Plugin Guru Way:
+
+1) Write in natural language (any language: english, portugues, spanish...) what you need the plugin to do, and ChatGPT will consult the configurations of the plugins already installed in your company and provide you with the declarative Kong configuration of the plugin you need. And that's it.
+
 
 ## Examples
-
-
-![opentelemetry](images/opentelemetry.png)
 
 ```
 plugins:
@@ -60,6 +62,7 @@ config:
         - admin
 ```
 
+## How it works
 
 ![Screenshot](images/flow.png)
 
@@ -69,6 +72,7 @@ config:
 
 3. Get the response from ChatGPT.
 
+## Build
 
 Install Kong:
 ```
