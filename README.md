@@ -3,7 +3,7 @@
 
 ![Screenshot](images/normalway-versus-aipluginguruway.png)
 
-![Screenshot](images/example_opentelemetry.png)
+![Screenshot](images/opentelemetry.png)
 
 ```
 plugins:
