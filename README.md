@@ -13,6 +13,31 @@ config:
     endpoint: "http://opentelemetry-collector-opus-software.otl:4318/v1/traces"
 ```
 
+![Screenshot](images/openidconnet.png)
+```
+  - name: openid-connect
+    instance_name: example-openid-connect
+    enabled: true
+    config:
+        auth_methods:
+        - bearer
+        introspect_jwt_tokens: false
+        verify_signature: false
+        client_id: 
+        - "{vault://aws/open-id-connect/client_id}"
+        client_secret: 
+        - "{vault://aws/open-id-connect/client_secret}"
+        verify_claims: true
+        issuer: http://keycloak.opus-software.com.br:9000/auth/realms/master/.well-known/openid-configuration
+        roles_claim:
+        - resource_access
+        - api-teste
+        - roles
+        roles_required:
+        - admin
+```
+
+
 ![Screenshot](images/flow.png)
 
 1. Get a developer key from the Developer API.
