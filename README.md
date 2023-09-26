@@ -56,6 +56,7 @@ Please replace the `client_id` and `client_secret` with your actual values. The 
 Plugin created by Ai Plugin Guru:
 
 ![openidconnet](images/openidconnet.png)
+![openidconnet](images/openidconnet2.png)
 
 
 ### User: I need to add tracing to my api "clients".
@@ -70,7 +71,6 @@ config:
 ```
 Plugin created by Ai Plugin Guru:
 
-![opentelemetry](images/opentelemetry.png)
 ![opentelemetry](images/opentelemetry2.png)
 
 ```
