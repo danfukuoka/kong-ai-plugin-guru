@@ -1,9 +1,9 @@
 # kong-ai-plugin-guru
 
 
-![Screenshot](images/normalway-versus-aipluginguruway.png)
+![normalway-versus-aipluginguruway](images/normalway-versus-aipluginguruway.png)
 
-![Screenshot](images/opentelemetry.png)
+![opentelemetry](images/opentelemetry.png)
 
 ```
 plugins:
@@ -13,7 +13,8 @@ config:
     endpoint: "http://opentelemetry-collector-opus-software.otl:4318/v1/traces"
 ```
 
-![Screenshot](images/openidconnet.png)
+![openidconnet](images/openidconnet.png)
+![openidconnet](images/openidconnet.jpg)
 ```
   - name: openid-connect
     instance_name: example-openid-connect
