@@ -37,8 +37,6 @@ For example, the following plugin is already configured, and AI Plugin Guru is g
 ```
 Based on your requirements, it seems like you need the "openid-connect" plugin. This plugin can be used to add authentication and authorization to your API. It can also check if the token has the role "admin". Here is the plugin in the declarative Kong format (Deck):
 
-```yaml
-_format_version: "1.1"
 plugins:
 - name: openid-connect
   config:
@@ -52,15 +50,12 @@ plugins:
     roles_required: ["admin"]
   tags: ["accounts-api"]
 
-```
-
 Please replace the `client_id` and `client_secret` with your actual values. The `tags` field has been set to `["accounts-api"]` as per your API name. If you have a different tag, please replace it accordingly.
 ```
 
 Plugin created by Ai Plugin Guru:
 
 ![openidconnet](images/openidconnet.png)
-
 
 
 ### User: I need to add tracing to my api "clients".
