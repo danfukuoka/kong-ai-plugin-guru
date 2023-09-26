@@ -15,7 +15,7 @@ This repository contains an Addon to the Kong Developer Portal that leverages Ch
 ### The Normal Way:
 A new developer has to go through at least these four steps:
 
-1) **Choose a plugin:** The developer has a problem and needs to search for a plugin that solves this problem. Sometimes, it's not clear which plugin to use because they have different names. For example, OpenID Connect (for authentication and authorization) and OpenTelemetry (for tracing).
+1) **Choose a plugin:** The developer needs to select a plugin that solves its problems. Sometimes, it's not clear which plugin to use because they have different names. For example, OpenID Connect (for authentication and authorization) and OpenTelemetry (for tracing).
 
 2) **Understand the basic structure:** Each plugin has its own basic structure described in its documentation.
 
@@ -25,20 +25,15 @@ A new developer has to go through at least these four steps:
 
 ### The AI Plugin Guru Way:
 
-1) Write in natural language (any language: english, portugues, spanish...) what you need the plugin to do, and ChatGPT will consult the configurations of the plugins already installed in your company and provide you with the declarative Kong configuration of the plugin you need. And that's it.
+1) **Write what you need:** Write in natural language (any language: english, portugues, spanish...) what you need the plugin to do, and ChatGPT will consult the configurations of the plugins already installed in your company and provide you with the declarative Kong configuration of the plugin you need. And that's it.
 
 
 ## Examples
 
-```
-plugins:
-- name: opentelemetry
-instance_name: example-opentemetry
-config:
-    endpoint: "http://opentelemetry-collector-opus-software.otl:4318/v1/traces"
-```
+### User: I need to add authentication and authorization to my api "accounts". Kong needs to check if the token has the role "admin" to acess my api.
 
-![openidconnet](images/openidconnet.png)
+This plugin is already configured in my company, and AI Plugin Guru is going to use this configuration as a base to suggest a new one:
+
 ```
   - name: openid-connect
     instance_name: example-openid-connect
@@ -62,15 +57,39 @@ config:
         - admin
 ```
 
+Plugin created by Ai Plugin Guru:
+
+![openidconnet](images/openidconnet.png)
+
+
+
+### User: I need to add tracing to my api "clients".
+
+This plugin is already configured in my company, and AI Plugin Guru is going to use this configuration as a base to suggest a new one:
+```
+plugins:
+- name: opentelemetry
+instance_name: example-opentemetry
+config:
+    endpoint: "http://opentelemetry-collector-opus-software.otl:4318/v1/traces"
+```
+Plugin created by Ai Plugin Guru:
+
+![opentelemetry](images/opentelemetry.png)
+
+
+
 ## How it works
+
+## Flow
 
 ![Screenshot](images/flow.png)
 
-1. Get a developer key from the Developer API.
+### 1. Get a developer key from the Developer Portal API.
 
-2. Get the json list of plugins already installed.
+### 2. Get the json list of plugins already installed.
 
-3. Get the response from ChatGPT.
+### 3. Get the response from ChatGPT.
 
 ## Build
 
