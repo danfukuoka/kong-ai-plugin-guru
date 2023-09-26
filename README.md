@@ -35,8 +35,32 @@ A new developer has to go through at least these four steps:
 For example, the following plugin is already configured, and AI Plugin Guru is going to use this configuration as a base to suggest a new one:
 
 ```
-Based on your requirements, it seems like you need the "openid-connect" plugin. This plugin can be used to add authentication and authorization to your API. It can also check if the token has the role "admin". Here is the plugin in the declarative Kong format (Deck):
+plugins:
+- name: openid-connect
+instance_name: example-openid-connect
+enabled: true
+config:
+    auth_methods:
+    - bearer
+    introspect_jwt_tokens: false
+    verify_signature: false
+    client_id: 
+    - "{vault://aws/open-id-connect/client_id}"
+    client_secret: 
+    - "{vault://aws/open-id-connect/client_secret}"
+    verify_claims: true
+    issuer: http://keycloak.opus-software.com.br:9000/auth/realms/master/.well-known/openid-configuration
+    roles_claim:
+    - resource_access
+    - api-teste
+    - roles
+    roles_required:
+    - admin
+```
 
+Plugin created by Ai Plugin Guru:
+
+```
 plugins:
 - name: openid-connect
   config:
@@ -49,14 +73,11 @@ plugins:
     roles_claim: ["resource_access", "accounts", "roles"]
     roles_required: ["admin"]
   tags: ["accounts-api"]
-
-Please replace the `client_id` and `client_secret` with your actual values. The `tags` field has been set to `["accounts-api"]` as per your API name. If you have a different tag, please replace it accordingly.
 ```
 
-Plugin created by Ai Plugin Guru:
+
 
 ![openidconnet](images/openidconnet.png)
-![openidconnet](images/openidconnet2.png)
 
 
 ### User: I need to add tracing to my api "clients".
@@ -70,8 +91,6 @@ config:
     endpoint: "http://opentelemetry-collector-opus-software.otl:4318/v1/traces"
 ```
 Plugin created by Ai Plugin Guru:
-
-![opentelemetry](images/opentelemetry2.png)
 
 ```
 plugins:
@@ -98,10 +117,18 @@ plugins:
   tags:
   - clients
   enabled: true
+
+![opentelemetry](images/opentelemetry.png)
+
+
 ```
 
 
 ## How it works
+
+First, the Kong AI Plugin Guru, a JavaScript tool within the Developer Portal, retrieves a list of configured plugins from the Kong Admin API (/plugins). This endpoint returns a list of installed plugins in JSON format.
+
+Afterward, the prompt that will be sent to ChatGPT is constructed as follows:
 
 ```
     Hello. Can you provide a Kong plugin in the declarative Kong format (Deck)?
@@ -115,15 +142,33 @@ plugins:
     Then, search in your database for how to use the plugin that is most likely to solve my problem.
 ```
 
+The user's input, describing their specific needs, is concatenated at the end of the prompt and sent to ChatGPT.
+
+```
+const requestData = {
+    model: "gpt-4",
+    messages: [{ role: "user", content: prompt + userInput }],
+    temperature: 0,
+};
+```
+
 ## Flow
 
 ![Screenshot](images/flow.png)
 
+In order to securely manage tokens for the Kong Admin API and ChatGPT, a process was implemented to store these tokens in AWS Secret Manager. To prevent exposing these tokens in JavaScript, they are injected into the headers when a request passes through the Kong Plugin.
+
+To secure these routes (Kong Admin API and ChatGPT), an authentication key has been created. To simplify the process for developers, the Kong AI Plugin Guru obtains a developer key from the Kong Developer Portal API for authentication against the authentication key system. The following steps outline this process:
+
 ### 1. Get a developer key from the Developer Portal API.
+Since the developer already has an active session with the Kong Developer Portal, it is possible to call the 'developer keys' endpoint (/credentials/key-auth?size=1) to retrieve a developer key.
 
 ### 2. Get the json list of plugins already installed.
+With this key, AI Plugin Guru can call the '/plugins' endpoint of the Kong Admin API to retrieve the list of already installed plugins. The Advanced Request Transformer will add the Kong Admin Token to the header. Due to the integration with AWS Secret Manager, this plugin must be of the 'advanced' type. The Cors plugin is used to only accept calls from the Developer Portal.
 
 ### 3. Get the response from ChatGPT.
+The same process applies to calling ChatGPT.
+
 
 ## Build
 
