@@ -38,6 +38,7 @@ services:
   port: 443
   protocol: https
   host: api.openai.com
+  read_timeout: 600000
   routes:
   - name: Chatgpt
     protocols:
