@@ -77,7 +77,7 @@ plugins:
 
 
 
-![openidconnet](images/openidconnet.png)
+![openidconnet](images/openidconnect.png)
 
 
 ### User: I need to add tracing to my api "clients".
@@ -117,11 +117,10 @@ plugins:
   tags:
   - clients
   enabled: true
+```
 
 ![opentelemetry](images/opentelemetry.png)
 
-
-```
 
 
 ## How it works
