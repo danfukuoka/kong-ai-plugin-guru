@@ -18,12 +18,12 @@
 
     <!-- Text Area for Response -->
     <label for="response">Declarative Kong:</label>
-    <textarea id="response" rows="40" cols="124" readonly></textarea>
+    <textarea id="response" rows="45" cols="124" readonly></textarea>
 
 
     <script>
 
-        document.getElementById("pluginInput").value = "I need to add tracing to my api"
+        document.getElementById("pluginInput").value = 'I need to add tracing to my api "clients".'
         
         kongProxy = "http://127.0.0.1:8000"
         kongPortalApi = "http://127.0.0.1:8004"
@@ -63,15 +63,15 @@
                                 Hello. Can you provide a Kong plugin in declarative Kong format (Deck)?
                                 I will tell you what kind of plugin I need.
                                 You will search for this plugin in this json list: '${pluginsJson}'.
-                                If you find the plugin that I want in this list, transform it into Deck,
+                                If you find the plugin that I want in this list and it closely matches my criteria, transform it into Deck,
                                 remove information about routes and services, and give it to me,
-                                and do not give a general example.
+                                and do not give a general example. If I provide specific information about my API, please use it to add custom tags.
                                 If you do not find it, please inform me that there is no plugin of this kind already configured,
                                 and then search in your database for how to use the plugin that is most likely to solve my problem.
                             `;
 
             const requestData = {
-                model: "gpt-3.5-turbo",
+                model: "gpt-4",
                 messages: [{ role: "user", content: prompt + userInput }],
                 temperature: 0,
             };

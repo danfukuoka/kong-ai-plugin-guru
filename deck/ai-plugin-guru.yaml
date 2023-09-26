@@ -17,19 +17,19 @@ services:
     strip_path: false
     plugins:
     - name: cors
-      instance_name: cors-kong-admin
+      instance_name: ai-cors-kong-admin
       config:
         origins:
         - http://127.0.0.1:8003
     - name: key-auth
-      instance_name: key-kong-admin
+      instance_name: ai-key-kong-admin
       config:
         key_names:
         - apikey
         key_in_header: true
         key_in_query: false
     - name: request-transformer-advanced
-      instance_name: rt-kong-admin
+      instance_name: ai-rt-kong-admin
       config:
         add:
           headers:
@@ -47,23 +47,20 @@ services:
     strip_path: true
     plugins:
     - name: cors
-      instance_name: cors-chatgpt
+      instance_name: ai-cors-chatgpt
       config:
         origins:
         - http://127.0.0.1:8003
     - name: key-auth
-      instance_name: key-chatgpt
+      instance_name: ai-key-chatgpt
       config:
         key_names:
         - apikey
         key_in_header: true
         key_in_query: false
     - name: request-transformer-advanced
-      instance_name: rt-chatgpt
+      instance_name: ai-rt-chatgpt
       config:
         add:
           headers:
           - "{vault://aws/ai-plugin-guru/chatgpt}"
-
-  
-  # deck sync --workspace default --select-tag ai-plugin-guru --state ./deck/ai-plugin-guru.yaml

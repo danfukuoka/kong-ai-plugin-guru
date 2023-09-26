@@ -1,0 +1,43 @@
+_format_version: "3.0"
+_workspace: default
+_info:
+  select_tags:
+  - example-plugins
+services:
+- name: Example
+  port: 80
+  protocol: http
+  host: example.com
+  plugins:
+  - name: opentelemetry
+    instance_name: example-opentemetry
+    config:
+      endpoint: "http://opentelemetry-collector-opus-software.otl:4318/v1/traces"
+  - name: file-log
+    instance_name: example-file-logs
+    config:
+      path: "/dev/stdout"
+  - name: prometheus
+    instance_name: example-prometheus
+    config:
+      bandwidth_metrics: true
+      latency_metrics: true
+      per_consumer: true
+      status_code_metrics: true
+      upstream_health_metrics: true
+  - name: openid-connect
+    instance_name: example-openid-connect
+    enabled: true
+    config:
+        auth_methods:
+        - bearer
+        introspect_jwt_tokens: false
+        verify_signature: false
+        verify_claims: true
+        issuer: http://keycloak.opus-software.com.br:9000/auth/realms/master/.well-known/openid-configuration
+        roles_claim:
+        - resource_access
+        - api-teste
+        - roles
+        roles_required:
+        - admin
