@@ -4,6 +4,8 @@
 
 URL: www.placeholder.com.br
 
+![kong-ai-plugin-guru](images/ai-plugin-guru.gif)
+
 ## About
 
 This repository contains an Addon to the Kong Developer Portal that leverages ChatGPT to create Kong plugins. The goal is to help new developers create new plugins more easily and quickly.
@@ -175,6 +177,7 @@ The same process applies to calling ChatGPT.
 Install Kong:
 ```
 helm --namespace kong install kong kong/kong  --values ./kong/embedded.yaml --create-namespace
+```
 
 In order for the integration with AWS Secret Manager to work, please add your values to these Environment Variables in embedded.yaml:
 customEnv:
@@ -182,7 +185,7 @@ customEnv:
   AWS_REGION:
   AWS_SECRET_ACCESS_KEY:
   AWS_SESSION_TOKEN:
-```
+
 
 Add the services, routes and plugins:
 ```
