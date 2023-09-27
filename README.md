@@ -188,6 +188,7 @@ customEnv:
 And create a secret with 2 keys: chatgpt and kong-admin.
 
 **Add the services, routes and plugins**:
+Please create a secret in AWS Secret Manager called 'ai-plugin-guru' with two keys: 'chatgpt' (which is your OpenAI key) and 'kong-admin' (which is a key for an RBAC user for Kong with a read-only role that has access only to the plugins endpoint).
 ```
 deck sync --workspace default --select-tag ai-plugin-guru --state ./deck/ai-plugin-guru.yaml
 ```
