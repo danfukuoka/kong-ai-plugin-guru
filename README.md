@@ -2,8 +2,6 @@
 
 ## Demo
 
-URL: www.placeholder.com.br
-
 ![kong-ai-plugin-guru](images/ai-plugin-guru.gif)
 
 ## About

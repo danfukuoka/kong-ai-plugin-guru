@@ -79,7 +79,6 @@
             };
             console.log( prompt + userInput)
 
-            // Make the first API call
             response = await fetch(url, {
                 method: "POST",
                 headers: {
@@ -91,7 +90,6 @@
             var responseOpenAi = await response.json();
             responseOpenAi = responseOpenAi.choices[0].message.content;
 
-            // Process and display the responses as needed
             document.getElementById("response").value = responseOpenAi;
 
         });
