@@ -125,7 +125,7 @@ plugins:
 
 ## How it works
 
-First, the Kong AI Plugin Guru, a JavaScript tool within the Developer Portal, retrieves a list of configured plugins from the Kong Admin API (/plugins). This endpoint returns a list of installed plugins in JSON format.
+First, the Kong AI Plugin Guru, a JavaScript file within the Developer Portal, retrieves a list of configured plugins from the Kong Admin API (/plugins). This endpoint returns a list of installed plugins in JSON format.
 
 Afterward, the prompt that will be sent to ChatGPT is constructed as follows:
 
@@ -137,6 +137,7 @@ Afterward, the prompt that will be sent to ChatGPT is constructed as follows:
     Remove information about routes and services, and provide me with the complete code.
     Do not provide a general example. Do not ask to replace fields that were found in the JSON list.
     If I provide specific information about my API, please use it to add custom tags.
+
     If you do not find the plugin, please inform me that there is no pre-configured plugin of this kind. 
     Then, search in your database for how to use the plugin that is most likely to solve my problem.
 ```
@@ -174,6 +175,13 @@ The same process applies to calling ChatGPT.
 Install Kong:
 ```
 helm --namespace kong install kong kong/kong  --values ./kong/embedded.yaml --create-namespace
+
+In order for the integration with AWS Secret Manager to work, please add your values to these Environment Variables in embedded.yaml:
+customEnv:
+  AWS_ACCESS_KEY_ID:
+  AWS_REGION:
+  AWS_SECRET_ACCESS_KEY:
+  AWS_SESSION_TOKEN:
 ```
 
 Add the services, routes and plugins:
@@ -188,7 +196,7 @@ deck sync --workspace default --select-tag example-plugins --state ./deck/exampl
 
 Add the Ai Plugin Guru to the Devportal:
 ```
-/portal.conf.yaml: Add the lines in ./developer-portal/portal.conf.yaml
+/portal.conf.yaml: Add the lines to ./developer-portal/portal.conf.yaml
 /content: Add the file ./developer-portal/content/ai-plugin-guru.txt
 /themes/base/layouts: Add the file ./developer-portal/themes/base/layouts/ai-plugin-guru.html
 ```
