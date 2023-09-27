@@ -174,7 +174,7 @@ The same process applies to calling ChatGPT.
 
 ## Build
 
-Install Kong:
+**Install Kong**:
 ```
 helm --namespace kong install kong kong/kong  --values ./kong/embedded.yaml --create-namespace
 ```
@@ -190,17 +190,17 @@ customEnv:
 
 And create a secret with 2 keys: chatgpt and kong-admin.
 
-Add the services, routes and plugins:
+**Add the services, routes and plugins**:
 ```
 deck sync --workspace default --select-tag ai-plugin-guru --state ./deck/ai-plugin-guru.yaml
 ```
 
-Add examples plugins:
+**Add examples plugins**:
 ```
 deck sync --workspace default --select-tag example-plugins --state ./deck/example-plugins.yaml
 ```
 
-Add the Ai Plugin Guru to the Devportal:
+**Add the Ai Plugin Guru to the Devportal**:
 ```
 /portal.conf.yaml: Add the lines to ./developer-portal/portal.conf.yaml
 /content: Add the file ./developer-portal/content/ai-plugin-guru.txt
