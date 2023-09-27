@@ -179,13 +179,16 @@ Install Kong:
 helm --namespace kong install kong kong/kong  --values ./kong/embedded.yaml --create-namespace
 ```
 
-In order for the integration with AWS Secret Manager to work, please add your values to these Environment Variables in embedded.yaml:
+To enable integration with AWS Secret Manager, please populate the values of these Environment Variables in the embedded.yaml file:
+```
 customEnv:
   AWS_ACCESS_KEY_ID:
   AWS_REGION:
   AWS_SECRET_ACCESS_KEY:
   AWS_SESSION_TOKEN:
+```
 
+And create a secret with 2 keys: chatgpt and kong-admin.
 
 Add the services, routes and plugins:
 ```
