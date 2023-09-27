@@ -137,7 +137,6 @@ Afterward, the prompt that will be sent to ChatGPT is constructed as follows:
     Remove information about routes and services, and provide me with the complete code.
     Do not provide a general example. Do not ask to replace fields that were found in the JSON list.
     If I provide specific information about my API, please use it to add custom tags.
-
     If you do not find the plugin, please inform me that there is no pre-configured plugin of this kind. 
     Then, search in your database for how to use the plugin that is most likely to solve my problem.
 ```
